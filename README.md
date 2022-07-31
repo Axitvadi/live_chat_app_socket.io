@@ -1,2 +1,2 @@
-# live_chat_app_socket.io
+# live chat app with socket.io
 chat app demo with socket.io
