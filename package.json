@@ -1,0 +1,35 @@
+{
+  "name": "live_chat_app_socket.io",
+  "version": "1.0.0",
+  "description": "live chat app demo with socket.io",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node app.js",
+    "watch": "nodemon app.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Axitvadi/live_chat_app_socket.io.git"
+  },
+  "keywords": [
+    "chat",
+    "app",
+    "socket.io",
+    "live"
+  ],
+  "author": "Axit vadi",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Axitvadi/live_chat_app_socket.io/issues"
+  },
+  "homepage": "https://github.com/Axitvadi/live_chat_app_socket.io#readme",
+  "dependencies": {
+    "express": "^4.18.1",
+    "mongoose": "^6.5.0",
+    "socket.io": "^4.5.1"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.19"
+  }
+}
