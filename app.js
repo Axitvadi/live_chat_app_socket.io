@@ -23,7 +23,6 @@ io.on('connection', (socket) => {
 
     // when user disconnect
     socket.on('disconnect', () =>{
-
     //message to all users
         io.emit('message','A user has left the chat')
     })

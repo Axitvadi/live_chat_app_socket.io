@@ -10,6 +10,10 @@ socket.on('message', function (message) {
     console.log(message)
 })
 
+socket.on('connect', () => {
+    console.log("user connected");
+})
+
 const form = document.getElementById('form');
 
 form.addEventListener('submit',  (event) => {
