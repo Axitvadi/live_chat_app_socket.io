@@ -1,0 +1,119 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    margin: 0;
+    font-family: "Open Sans", sans-serif;
+}
+
+.fullscreen-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    width: 100vw;
+    background: linear-gradient(53deg, rgba(25, 191, 203, 1) 6%, rgba(188, 81, 218, 1) 61%);
+
+}
+
+.login-container {
+    width: 50%;
+    max-width: 400px;
+    min-width: 300px;
+    padding: 50px 25px 20px;
+    background: white;
+    border-radius: 10px;
+}
+
+.header {
+    text-align: center;
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    margin-top: 50px;
+}
+
+.input-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-size: .8rem;
+}
+
+.input-group input {
+    font-size: .9rem;
+    padding: 10px;
+    border: none;
+    outline: none;
+    border-bottom: 2px solid hsl(0, 0%, 83%);
+}
+
+.input-group input:focus {
+    box-shadow: 0 0 0 1px hsl(178, 100%, 50%);
+    border-bottom: 2px solid hsl(0, 0%, 83%, 0%);
+}
+
+.button {
+    margin: 20px 0;
+    padding: 10px 0;
+    border-radius: 25px;
+    border: none;
+    outline: none;
+    cursor: pointer;
+    background: linear-gradient(53deg, rgba(25, 191, 203, 1) 6%, rgba(188, 81, 218, 1) 73%);
+    color: white;
+    font-size: 1rem;
+}
+
+.button:focus {
+    box-shadow: 0 0 0 1px hsl(178, 100%, 50%);
+}
+
+.signup-header {
+    text-align: center;
+    font-weight: 200;
+    font-size: .9rem;
+    margin-top: 75px;
+}
+
+.social-icons {
+    margin-top: 20px;
+}
+
+.social-list {
+    list-style: none;
+    display: flex;
+    justify-content: center;
+    gap: 10px;
+}
+
+.social-links {
+    text-decoration: none;
+}
+
+.fa-brands {
+    font-size: 1.75rem;
+}
+
+.fa-facebook {
+    border-radius: 50%;
+    background: white;
+    color: #435892;
+}
+
+.fa-twitter {
+    border-radius: 50%;
+    padding: px;
+    color: #4AA0E8;
+    background-color: white;
+}
+
+.fa-google {
+    color: #D64E44;
+}
