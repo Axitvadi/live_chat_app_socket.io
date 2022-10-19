@@ -21,8 +21,8 @@ exports.signup = async (req, res) => {
     user.password = req.body.password
 
     const newUser = await user.save();
-    return res.status(200).redirect("/signup");
-    req.flash('success','You Are Successfull SignUp Please Verify With Email')
+    res.status(200).redirect("/signup");
+    return req.flash('success','You Are Successfull SignUp Please Verify With Email')
   } catch (error) {
     return res.status(401).redirect("/signup");
   }
@@ -49,14 +49,14 @@ exports.login = async (req, res) => {
 
     const matchPw = await bcrypt.compare(password, user.password);
     if (!matchPw) {
-        return req.flash('error','Password Is Inccorect')
+        // return req.flash('error','Password Is Inccorect')
          
-    //   return res.redirect("/login");
+      return res.redirect("/login");
     }
 
     req.session.user = user.email;
 
-    return  req.flash('error','Password Is Inccorect')
+  return res.redirect("/chatpage");
   } catch (error) {
     // return req.flash('error','Plz SignUp')
     return res.status(500).redirect("/signup");
