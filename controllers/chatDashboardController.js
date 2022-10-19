@@ -1,3 +1,7 @@
+const User = require('../models/user');
+
 exports.chatPage = async (req, res) => {
-    res.render("chat");
+  const users = await User.find();
+  console.log(users);
+    res.render("chat",{data:users});
   };

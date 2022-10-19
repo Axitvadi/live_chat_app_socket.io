@@ -7,7 +7,7 @@ const nodemailer = require("nodemailer");
 exports.signupPage = async (req, res) => {
   const success = req.flash("success");
   const error = req.flash("error");
-  res.render("signup",{success,error});
+  res.render("signup", { success, error });
 };
 
 exports.signup = async (req, res) => {
@@ -16,13 +16,16 @@ exports.signup = async (req, res) => {
     // const hasPw = await bcrypt.hash(password,12);
     const user = new User();
 
-    user.name = req.body.name
-    user.email = req.body.email
-    user.password = req.body.password
+    user.name = req.body.name;
+    user.email = req.body.email;
+    user.password = req.body.password;
 
     const newUser = await user.save();
     res.status(200).redirect("/signup");
-    return req.flash('success','You Are Successfull SignUp Please Verify With Email')
+    return req.flash(
+      "success",
+      "You Are Successfull SignUp Please Verify With Email"
+    );
   } catch (error) {
     return res.status(401).redirect("/signup");
   }
@@ -30,7 +33,6 @@ exports.signup = async (req, res) => {
 
 // <<<<<<<<<<<<<<<<<<<<< LOGIN PAGE RENDER AND CONTROLLER >>>>>>>>>>>>>>>>>>>>
 exports.loginPage = async (req, res) => {
-
   const success = req.flash("success");
   const error = req.flash("error");
   res.render("login", { success, error });
@@ -42,21 +44,24 @@ exports.login = async (req, res) => {
 
     const user = await User.findOne({ email });
     if (!user) {
-      return req.flash('error','Plz SignUp')
-    //   return res.redirect("/signup");
+      return req.flash("error", "Plz SignUp");
+      //   return res.redirect("/signup");
     }
     console.log(user);
 
     const matchPw = await bcrypt.compare(password, user.password);
     if (!matchPw) {
-        // return req.flash('error','Password Is Inccorect')
-         
+      // return req.flash('error','Password Is Inccorect')
+
       return res.redirect("/login");
     }
 
     req.session.user = user.email;
 
-  return res.redirect("/chatpage");
+    user.verified = true;
+    await user.save();
+
+    return res.redirect("/chatpage");
   } catch (error) {
     // return req.flash('error','Plz SignUp')
     return res.status(500).redirect("/signup");
