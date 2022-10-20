@@ -2,11 +2,14 @@ require('dotenv').config()
 require('./config/db');
 const express = require("express")
 const app = express()
+
 const http = require('http')
 const server = http.createServer(app)
 const { Server } = require('socket.io')
 const io = new Server(server)
+
 const port = process.env.PORT || 3000
+const socketHandler = require('./controllers/chatController')
 
 const path = require('path')
 const flash = require('connect-flash')
@@ -48,20 +51,7 @@ server.listen(port, () => {
     console.log(`http://localhost:${port}`)
 })
 
-
-
 // run when user connect
 io.on('connection', (socket) => {
-    //msg to join user
-    socket.emit('message','Welcome to chat !')
-
-    // to all users accept join user
-    socket.broadcast.emit('message','User has Joined chat !')
-
-    // when user disconnect
-    socket.on('disconnect', () =>{
-    //message to all users
-        io.emit('message','A user has left the chat')
-    })
+  socketHandler(socket,io)
 })
-
