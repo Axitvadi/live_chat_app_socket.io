@@ -12,7 +12,7 @@
   <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
     integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="/css/style.css">
+  <link rel="stylesheet" href="/css/chat.css">
 </head>
 
 <body>
@@ -75,8 +75,8 @@
               </ul>
             </div>
           </div>
-          <div id="chat_body" class="card-body msg_card_body">
-            <div class="d-flex justify-content-start mb-4">
+           <div id="chat_body" class="card-body msg_card_body">
+           <!-- <div class="d-flex justify-content-start mb-4">
               <div class="img_cont_msg">
                 <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img_msg">
               </div>
@@ -147,15 +147,15 @@
                 Bye, see you
                 <span class="msg_time">9:12 AM, Today</span>
               </div>
-            </div>
-          </div>
+            </div> -->
+          </div> 
           <input id="userName" type="hidden" value="<%= userName %>" >
           <form id="form" class="card-footer">
             <div class="input-group">
               <div class="input-group-append">
                 <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
               </div>
-              <textarea name="message" class="form-control type_msg" placeholder="Type your message..."></textarea>
+              <textarea name="message" id="textarea" class="form-control type_msg" placeholder="Type your message..."></textarea>
               <div class="input-group-append">
                 <button type="submit" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
               </div>
