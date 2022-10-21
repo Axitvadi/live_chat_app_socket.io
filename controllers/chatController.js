@@ -1,3 +1,5 @@
+const Message = require("../models/message");
+
 module.exports = (socket, io) => {
   //msg to join user
   // socket.on("joinUser", async (data) => {
@@ -14,8 +16,18 @@ module.exports = (socket, io) => {
   //   socket.broadcast.emit("message", `${name} has left the chat`);
   // });
 
-  
-  socket.on("message", ( msjobj) => {
+  socket.on("message", async (msjobj) => {
+
+    const {userId, usermsj} = msjobj
+
+    const newMsg = {
+      senderId : userId,
+      receiverId : "",
+      message: usermsj
+    };
+    
+    const message = await Message.create(newMsg);
+
     socket.broadcast.emit("serverMsj", msjobj);
   });
 };
