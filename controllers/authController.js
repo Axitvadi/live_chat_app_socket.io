@@ -59,6 +59,7 @@ exports.login = async (req, res) => {
     req.session.user = user.email;
 
     user.verified = true;
+    user.active = true
     await user.save();
 
     return res.redirect("/chatpage");

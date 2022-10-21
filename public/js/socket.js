@@ -6,6 +6,8 @@ $(document).ready(function () {
 
 const socket = io();
 
+let receiverId = null;
+
 // socket.on('message', function (message) {
 //     console.log(`User : ${message}`)
 // })
@@ -48,18 +50,27 @@ let textarea = document.getElementById("textarea");
 let msjarea = document.getElementById("chat_body");
 
 textarea.addEventListener("keyup", (e) => {
-    
     if (e.key === "Enter") {
         let msj = textarea.value;
         sendMassage(msj)
     }
 })
 
+form.addEventListener('submit',  (event) => {
+    event.preventDefault();
+    const message = event.target.elements.message.value;
+    console.log(message);
+    sendMassage(message)  
+})
+
 function sendMassage(msj) {
     
     const name =  document.getElementById('userName').value
+    const userId =  document.getElementById('userId').value
+    
     msjobj = {
-    username:name,
+    userId,
+    receiverId,
     usermsj: msj.trim()
     }
     
@@ -92,4 +103,15 @@ function appedMessage(msjobj, type) {
 
 function scroll() {
     msjarea.scrollTop = msjarea.scrollHeight;
+}
+
+
+const activeUsers = document.getElementsByClassName("active")
+
+for(let activeUser = 0; activeUser < activeUsers.length; activeUser++ ){
+    activeUsers[activeUser].addEventListener('click', () => {
+
+        receiverId = "634f65ed0604a8ce873f4a6d"
+        console.log("success");
+    })
 }
