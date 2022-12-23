@@ -1,130 +1,126 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
-  <meta charset="UTF-8" />
-  <meta http-equiv="X-UA-Compatible" content="IE=edge" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Chat App</title>
+    <meta charset="UTF-8"/>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Chat App</title>
 
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/css/bootstrap.min.css"
+          integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
-    integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.5.0/css/all.css"
+          integrity="sha384-B4dIYHKNBt8Bc12p+WXckhzcICo0wtJAoU8YZTY5qE0Id1GSseTk6S+L3BlXeVIU" crossorigin="anonymous">
 
-  <link rel="stylesheet" href="/css/chat.css">
+    <link rel="stylesheet" href="/css/chat.css">
 </head>
+<style>
+    .chat_body .incoming, .chat_body .outgoing {
+        margin-top: 10px;
+    }
+</style>
 
 <body>
-  <div class="container-fluid h-100">
+<div class="container-fluid h-100">
     <div class="row justify-content-center h-100">
-      <div class="col-md-4 col-xl-3 chat"><div class="card mb-sm-3 mb-md-0 contacts_card">
-        <div class="card-header">
-          <div class="input-group">
-            <input type="text" placeholder="Search..." name="" class="form-control search">
-            <div class="input-group-prepend">
-              <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
-            </div>
-          </div>
-        </div>
-        <div class="card-body contacts_body">
-          <ui class="contacts">
-            <% if( typeof users !== 'undefined' && users.length ){ %>
-              <% users.forEach(user => { %>
-                <li class="active">
-                  <div class="d-flex bd-highlight">
-                    <div class="img_cont">
-                      <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                      <span class="online_icon"></span>
+        <div class="col-md-4 col-xl-3 chat">
+            <div class="card mb-sm-3 mb-md-0 contacts_card">
+                <div class="card-header">
+                    <div class="input-group">
+                        <input type="text" placeholder="Search..." name="" class="form-control search">
+                        <div class="input-group-prepend">
+                            <span class="input-group-text search_btn"><i class="fas fa-search"></i></span>
+                        </div>
                     </div>
-                    <div id="<%= user._id %>" data-id="<%= user._id %>" class="user_info">
-                      <span><%= user.name %></span>
-                      <p>Kalid is online</p>
+                </div>
+                <div class="card-body contacts_body">
+                    <ul class="contacts poiner">
+                        <% if( typeof users !== 'undefined' && users.length ){ %>
+                            <% users.forEach(user => { %>
+                                <li class="active" data-id="<%= user._id %>">
+                                    <div class="d-flex bd-highlight clickUsers">
+                                        <div class="img_cont1">
+                                            <img src="http://localhost:3000/<%= user.image %>"
+                                                 class="rounded-circle user_img " alt="profile image">
+                                            <span class="online_icon"></span>
+                                        </div>
+                                        <div class="user_info" data-name="<%= user.name %>" data-id="<%= user._id %>">
+                                            <span><%= user.name %></span>
+                                        </div>
+                                    </div>
+                                </li>
+                            <% }) %>
+                        <% } %>
+                    </ul>
+                </div>
+                <div class="card-footer"></div>
+            </div>
+        </div>
+        <div class="col-md-8 col-xl-6 chat">
+            <div class="card">
+                <div class="card-header msg_head">
+                    <div class="d-flex bd-highlight">
+                        <div class="img_cont">
+                            <img src="http://localhost:3000/<%= users[0].image %>"
+                                 class="rounded-circle user_img" id="show_img" alt="profile image">
+                            <span class="online_icon"></span>
+                        </div>
+                        <div class="user_info">
+                            <span id="show_user"><%= users[0].name %> </span>
+                            <p>Online</p>
+                        </div>
+                        <div class="video_cam">
+                            <span><i class="fas fa-video"></i></span>
+                            <span><i class="fas fa-camera"></i></span>
+                        </div>
                     </div>
-                  </div>
-                </li>
-              <% }) %>
-            <%}%>
+                    <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
+                    <div class="action_menu">
+                        <ul>
+                            <li><i class="fas fa-user-circle"></i><a target="_blank" href="/edit-profile"
+                                                                     style="text-decoration: none ; color: white">View
+                                    Profile</a></li>
+                            <li><i class="fas fa-ban"></i><a style="text-decoration: none ; color: white"
+                                                             href="/log-out">Log-Out</a></li>
+                        </ul>
+                    </div>
+                </div>
+                <div id="chat_body" class="card-body msg_card_body">
 
-            <li class="active">
-              <div class="d-flex bd-highlight">
-                <div class="img_cont">
-                  <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                  <span class="online_icon"></span>
-                </div>
-                <div id="634f65ed0604a8ce873f4a6c" class="user_info">
-                  <span>dhaval</span>
-                  <p>dhaval is online</p>
-                </div>
-              </div>
-            </li>
+                    <!-- message will be append here -->
 
-            <li class="active">
-              <div class="d-flex bd-highlight">
-                <div class="img_cont">
-                  <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                  <span class="online_icon"></span>
                 </div>
-                <div id="634f65ed0604a8ce873f4a6d" class="user_info">
-                  <span>dhaval</span>
-                  <p>dhaval is online</p>
-                </div>
-              </div>
-            </li>
+                <input id="userName" type="hidden"
+                       value="<%= (typeof logInUser !== undefined && logInUser) ? logInUser.name : " " %>">
+                <input id="userId" type="hidden"
+                       value="<%= (typeof logInUser !== undefined && logInUser) ? logInUser._id : " " %>">
+                <form id="form" class="card-footer">
+                    <div class="input-group">
+                        <div class="input-group-append">
+                            <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
+                        </div>
+                        <textarea name="message" id="textarea" class="form-control type_msg"
+                                  placeholder="Type your message..."></textarea>
+                        <div class="input-group-append">
+                            <button type="submit" class="input-group-text send_btn"><i
+                                        class="fas fa-location-arrow"></i></button>
+                        </div>
+                    </div>
+                </form>
+            </div>
         </div>
-        <div class="card-footer"></div>
-      </div></div>
-      <div class="col-md-8 col-xl-6 chat">
-        <div class="card">
-          <div class="card-header msg_head">
-            <div class="d-flex bd-highlight">
-              <div class="img_cont">
-                <img src="https://static.turbosquid.com/Preview/001292/481/WV/_D.jpg" class="rounded-circle user_img">
-                <span class="online_icon"></span>
-              </div>
-              <div class="user_info">
-                <span>Chat with Khalid</span>
-                <p>1767 Messages</p>
-              </div>
-              <div class="video_cam">
-                <span><i class="fas fa-video"></i></span>
-                <span><i class="fas fa-phone"></i></span>
-              </div>
-            </div>
-            <span id="action_menu_btn"><i class="fas fa-ellipsis-v"></i></span>
-            <div class="action_menu">
-              <ul>
-                <li><i class="fas fa-user-circle"></i> View profile</li>
-                <li><i class="fas fa-users"></i> Add to close friends</li>
-                <li><i class="fas fa-plus"></i> Add to group</li>
-                <li><i class="fas fa-ban"></i> Block</li>
-              </ul>
-            </div>
-          </div>
-           <div id="chat_body" class="card-body msg_card_body">
-            <!-- message will be append here -->
-          </div> 
-          <input id="userName" type="hidden" value="<%= user.name %>" >
-          <input id="userId" type="hidden" value="<%= user.id %>" >
-          <form id="form" class="card-footer">
-            <div class="input-group">
-              <div class="input-group-append">
-                <span class="input-group-text attach_btn"><i class="fas fa-paperclip"></i></span>
-              </div>
-              <textarea name="message" id="textarea" class="form-control type_msg" placeholder="Type your message..."></textarea>
-              <div class="input-group-append">
-                <button type="submit" class="input-group-text send_btn"><i class="fas fa-location-arrow"></i></button>
-              </div>
-            </div>
-          </form>
-        </div>
-      </div>
     </div>
-  </div>
-  <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-  <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
-  <script type="text/javascript" src="/socket.io/socket.io.js" ></script>
-  <script type="text/javascript" src="/js/socket.js"></script>
+</div>
+<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js"
+        integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.12.9/dist/umd/popper.min.js"
+        integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q"
+        crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.0.0/dist/js/bootstrap.min.js"
+        integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl"
+        crossorigin="anonymous"></script>
+<script type="text/javascript" src="/socket.io/socket.io.js"></script>
+<script type="text/javascript" src="/js/socket.js"></script>
 </body>
 </html>

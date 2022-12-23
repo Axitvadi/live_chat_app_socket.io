@@ -6,7 +6,9 @@ html {
   background: -webkit-linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
   background: linear-gradient(to right, #91eae4, #86a8e7, #7f7fd5);
 }
-
+.poiner{
+  cursor: pointer;
+}
 .chat {
   margin-top: auto;
   margin-bottom: auto;
@@ -234,13 +236,14 @@ html {
   background-color: #256d85;
   color: white;
   font-size: 20px;
+  margin-top: 30px;
 }
-
 .outgoing {
   background-color: #dff6ff;
   font-size: 20px;
   color: #002b5b;
   margin-left: auto;
+  margin-top: 30px;
 }
 .message p {
   margin: 0;

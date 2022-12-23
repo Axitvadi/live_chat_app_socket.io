@@ -4,114 +4,112 @@ $(document).ready(function () {
     });
 });
 
-const socket = io();
+const socket = io()
 
 let receiverId = null;
+const userId = document.getElementById('userId').value
 
-// socket.on('message', function (message) {
-//     console.log(`User : ${message}`)
-// })
+// user Function
+function addDefaultReceiver() {
+    const chatBody = document.getElementsByClassName("clickUsers")[0]
+    const defaultUser = chatBody.parentElement
+    const defaultUserId = defaultUser.getAttribute('data-id')
+    receiverId = defaultUserId ? defaultUserId : null
+    const senderId = document.getElementById("userId").value
+    socket.emit("getMessages", {receiverId, senderId})
+}
 
-// socket.on('connect', () => {
-//     const name =  document.getElementById('userName').value
-//     socket.emit('joinUser',`${name} join` )
-    
-// })
-// socket.on('connect', () => {
-//     let name =  document.getElementById('userName').value
-//     let message = `${name} Has Joined Chat !!`
-//     const userObj = {
-//         name : name,
-//         message : message
-//     }
-//     socket.emit('joinUser',userObj )
-//     socket.emit('left',name)
-    
-// })
+addDefaultReceiver()
 
-// const form = document.getElementById('form');
+//  Click User Function
+const clickUser = document.getElementsByClassName('clickUsers')
+for (let i = 0; i < clickUser.length; i++) {
+    clickUser[i].addEventListener('click', () => {
+        const senderId = document.getElementById("userId").value
+        const receiverName = clickUser[i].children[1].getAttribute('data-name')
+        receiverId = clickUser[i].parentElement.getAttribute('data-id')
+        const user = document.getElementById("show_user")
+        const userImg = clickUser[i].children[0].children[0].src
+        const showImg = document.getElementById("show_img")
+        user.innerHTML = receiverName;
+        showImg.src = userImg
+        chatBody.innerHTML = " "
+        socket.emit("getMessages", {receiverId, senderId})
+    })
+}
 
+let chatBody = document.getElementById("chat_body")
 
-// socket.on('joinUserInfo', (data)=>{
-//     console.log(data.name);
-//     console.log(data.message);
-// })
-
-// form.addEventListener('submit',  (event) => {
-//     event.preventDefault();
-//     const message = event.target.elements.message.value;
-//     console.log(message);
-// })
-
+// Connect Client to server
+socket.on('connect', () => {
+    console.log("connect")
+    const UserID = document.getElementById("userId").value
+    socket.emit("join", UserID);
+})
 
 // <<<<<<<<<< CHAT BODY >>>>>>
-
 let textarea = document.getElementById("textarea");
-let msjarea = document.getElementById("chat_body");
 
 textarea.addEventListener("keyup", (e) => {
     if (e.key === "Enter") {
         let msj = textarea.value;
-        sendMassage(msj)
+        if (msj !== undefined) {
+            sendMassage(msj)
+        }
     }
 })
 
-form.addEventListener('submit',  (event) => {
+form.addEventListener('submit', (event) => {
     event.preventDefault();
     const message = event.target.elements.message.value;
-    console.log(message);
-    sendMassage(message)  
+    sendMassage(message)
 })
 
 function sendMassage(msj) {
-    
-    const name =  document.getElementById('userName').value
-    const userId =  document.getElementById('userId').value
-    
-    msjobj = {
-    userId,
-    receiverId,
-    usermsj: msj.trim()
-    }
-    
-    appedMessage(msjobj, "outgoing");
-    textarea.value = "";
-    
-    socket.emit("message", msjobj);   
-    scroll();
-};
+    const name = document.getElementById('userName').value
 
-socket.on("serverMsj", (serverSideMsj) => {
-    appedMessage(serverSideMsj, "incoming");
+    msjobj = {
+        userId, receiverId, message: msj.trim(), name: name,
+    }
+    appedMessage(msjobj, "outgoing");
+    textarea.value = " ";
+    socket.emit("sendMessage", msjobj);
     scroll();
+}
+
+socket.on("receiveMessage", (message) => {
+    if (receiverId === String(message.senderId)) {
+        appedMessage(message, "incoming");
+        scroll();
+    }
 });
 
+socket.on("allMessages", (messages) => {
+    messages.forEach((message) => {
+        const newMessage = {
+            message: message.message, name: message.senderId.name
+        }
+        if (userId === String(message.senderId._id)) {
+            appedMessage(newMessage, "outgoing")
+        } else {
+            appedMessage(newMessage, "incoming");
+        }
+    })
+    scroll();
+})
 
-function appedMessage(msjobj, type) {
-
+function appedMessage(message, type) {
     let maindiv = document.createElement("div");
+    let msjarea = document.getElementById('chat_body')
     maindiv.classList.add(type, "message");
-
-    let markup = `
-    <h5> ${msjobj.username} </h5>
-    <p> ${msjobj.usermsj} </p>
-    `
+    let markup;
+    markup = `<h5>${message.name}</h5>
+                  <p>${message.message}</p>`
     maindiv.innerHTML = markup;
-
     msjarea.appendChild(maindiv);
 }
 
-function scroll() {
-    msjarea.scrollTop = msjarea.scrollHeight;
-}
 
 
-const activeUsers = document.getElementsByClassName("active")
 
-for(let activeUser = 0; activeUser < activeUsers.length; activeUser++ ){
-    activeUsers[activeUser].addEventListener('click', () => {
 
-        receiverId = "634f65ed0604a8ce873f4a6d"
-        console.log("success");
-    })
-}
