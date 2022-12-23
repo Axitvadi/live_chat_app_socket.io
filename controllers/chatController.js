@@ -1,33 +1,35 @@
 const Message = require("../models/message");
 
 module.exports = (socket, io) => {
-  //msg to join user
-  // socket.on("joinUser", async (data) => {
-  //   socket.broadcast.emit('joinUserInfo', data)
-  // });
+    socket.on('join', (userId) => {
+        socket.join(userId);
+    });
+    socket.on("sendMessage", async (messageNew) => {
+        const {userId, message, receiverId, name} = messageNew
+        const newMsg = {
+            senderId: userId,
+            receiverId,
+            message: message,
+        };
+        const newMessage = await Message.create(newMsg);
+        const result = {
+            senderId: newMsg.senderId,
+            receiverId: newMsg.receiverId,
+            message: newMsg.message,
+            name: name,
+        }
+        socket.to(receiverId).emit("receiveMessage", result);
+    });
 
-  // // to all users accept join user
-  // // socket.broadcast.emit("message", "User has Joined chat !");
-
-  // // when user disconnect
-  // socket.on("left", (name) => {
-  //   //message to all users
-  //   // io.emit("message", `${name} has left the chat`);
-  //   socket.broadcast.emit("message", `${name} has left the chat`);
-  // });
-
-  socket.on("message", async (msjobj) => {
-
-    const {userId, usermsj} = msjobj
-
-    const newMsg = {
-      senderId : userId,
-      receiverId : "",
-      message: usermsj
-    };
-    
-    const message = await Message.create(newMsg);
-
-    socket.broadcast.emit("serverMsj", msjobj);
-  });
+    socket.on("getMessages", async (message) => {
+        const receiverId = message.receiverId;
+        const senderId = message.senderId;
+        const messageAll = await Message.find({
+            $or: [
+                {receiverId: receiverId, senderId: senderId},
+                {senderId: receiverId, receiverId: senderId}
+            ]
+        }).populate(["senderId", "receiverId"]);
+        socket.emit("allMessages", messageAll)
+    })
 };

@@ -5,7 +5,7 @@ const authRoute = require('./authRoutes');
 const chatDashboardRoute = require('./chatDashboardRoute');
 const {indexPage} = require('../controllers/indexController')
 
-router.get('/',indexPage)
+router.get('/', indexPage)
 
 router.use('/',authRoute);
 router.use('/',chatDashboardRoute);
