@@ -1,7 +1,7 @@
 const express = require('express');
 const router = express.Router();
 
-const authRoute = require('./authRoutes');
+const authRoute = require('./authRoute');
 const chatDashboardRoute = require('./chatDashboardRoute');
 const {indexPage} = require('../controllers/indexController')
 
