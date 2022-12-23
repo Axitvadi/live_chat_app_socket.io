@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router();
 const upload = require('../multer/multer')
-const {isAuthentication, isNotAuthentication } = require("../middlware/authencation")
+const {isAuthentication, isNotAuthentication } = require("../middlware/authentication")
 const {
   loginPage,
   login,
